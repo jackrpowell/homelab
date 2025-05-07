@@ -27,26 +27,3 @@ qbittorrent.local {
 gluetun.local {
     reverse_proxy localhost:8888
 }
-
-# Add more services as needed
-
-:80
-
-reverse_proxy :8080
-
-:32400
-
-reverse_proxy :32400
-
-:8989
-
-reverse_proxy :8989
-
-:8081
-
-reverse_proxy :8081
-
-:8888
-
-reverse_proxy :8888
-
