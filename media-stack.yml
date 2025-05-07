@@ -1,22 +1,44 @@
 version: '3.8'
 
+networks:
+  vpn:
+    name: vpn
+  media:
+    name: media
+
 services:
   gluetun:
     image: qmcgaw/gluetun
-    container_name: gluetun
     cap_add:
       - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
       - OPENVPN_USER=${OPENVPN_USER}
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - SERVER_REGIONS=${SERVER_REGIONS}
     ports:
-      - 8888:8888/tcp  # HTTP proxy
-      - 8388:8388/tcp  # Shadowsocks
-      - 8388:8388/udp  # Shadowsocks
-    volumes:
-      - ./gluetun:/gluetun
+      # qBittorrent
+      - 8081:8081
+      - 6881:6881
+      - 6881:6881/udp
+      # Sonarr
+      - 8989:8989
+      # Radarr
+      - 7878:7878
+      # Lidarr
+      - 8686:8686
+      # Readarr
+      - 8787:8787
+      # Prowlarr
+      - 9696:9696
+      # Bazarr
+      - 6767:6767
+    networks:
+      - vpn
     restart: unless-stopped
 
   qbittorrent:
@@ -27,13 +49,10 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - WEBUI_PORT=8081
+      - TORRENTING_PORT=6881
     volumes:
       - ./qbittorrent/config:/config
       - ./downloads:/downloads
-    ports:
-      - 8081:8081
-      - 6881:6881
-      - 6881:6881/udp
     depends_on:
       - gluetun
     network_mode: "service:gluetun"
@@ -50,11 +69,103 @@ services:
       - ./sonarr/config:/config
       - ./downloads:/downloads
       - ./tv:/tv
-    ports:
-      - 8989:8989
     depends_on:
       - gluetun
     network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./radarr/config:/config
+      - ./downloads:/downloads
+      - ./movies:/movies
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./lidarr/config:/config
+      - ./downloads:/downloads
+      - ./music:/music
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  readarr:
+    image: lscr.io/linuxserver/readarr:latest
+    container_name: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./readarr/config:/config
+      - ./downloads:/downloads
+      - ./books:/books
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./prowlarr/config:/config
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./bazarr/config:/config
+      - ./movies:/movies
+      - ./tv:/tv
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./tautulli/config:/config
+      - ./plex/config/Library/Application Support/Plex Media Server/Logs:/logs:ro
+    ports:
+      - 8181:8181
+    networks:
+      - media
     restart: unless-stopped
 
   plex:
@@ -71,14 +182,8 @@ services:
       - ./plex/transcode:/transcode
       - ./tv:/tv
       - ./movies:/movies
-    ports:
-      - 32400:32400/tcp
-      - 3005:3005/tcp
-      - 8324:8324/tcp
-      - 32469:32469/tcp
-      - 1900:1900/udp
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
+      - ./music:/music
+      - ./books:/books
+    networks:
+      - media
     restart: unless-stopped 
