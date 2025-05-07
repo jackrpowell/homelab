@@ -1,3 +1,35 @@
+# Global options
+{
+    # Enable automatic HTTPS
+    auto_https off
+}
+
+dashboard.local {
+    reverse_proxy localhost:8080
+}
+
+# Plex Media Server
+plex.local {
+    reverse_proxy localhost:32400
+}
+
+# Sonarr
+sonarr.local {
+    reverse_proxy localhost:8989
+}
+
+# qBittorrent
+qbittorrent.local {
+    reverse_proxy localhost:8081
+}
+
+# Gluetun HTTP Proxy
+gluetun.local {
+    reverse_proxy localhost:8888
+}
+
+# Add more services as needed
+
 :80
 
 reverse_proxy :8080
