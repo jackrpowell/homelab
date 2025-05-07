@@ -1,0 +1,23 @@
+# Environment variables
+.env
+
+# Docker volumes
+gluetun/
+qbittorrent/
+sonarr/
+plex/
+downloads/
+tv/
+movies/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 

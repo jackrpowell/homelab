@@ -12,9 +12,18 @@ pages:
             cache: 1m
             title: Services
             sites:
+              - title: Plex
+                url: http://${LOCAL_IP}:32400/web
+                icon: si:plex
               - title: Sonarr
-                url: https://192.168.1.180:8989
+                url: http://${LOCAL_IP}:8989
                 icon: si:sonarr
+              - title: qBittorrent
+                url: http://${LOCAL_IP}:8081
+                icon: si:qbittorrent
+              - title: Gluetun
+                url: http://${LOCAL_IP}:8888
+                icon: si:gluetun
 
           - type: bookmarks
             groups:
