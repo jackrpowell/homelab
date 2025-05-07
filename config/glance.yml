@@ -41,19 +41,31 @@ pages:
 
           - type: videos
             channels:
-              - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
-              - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
-              - UCsBjURrPoezykLs9EqgamOA # Fireship
-              - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
-              - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+              - UCfpCQ89W9wjkHc8J_6eTbBg # OutdoorBoys
+              - UCu8YylsPiu9XfaQC74Hr_Gw # Berm Peak
+              - UCSnqXeK94-iNmwqGO__eJ5g # Steve Wallis
+              - UCm325cMiw9B15xl22_gr6Dw # Beau Miles
+
 
           - type: group
             widgets:
+              - type: reddit
+                subreddit: devops
+                show-thumbnails: true
               - type: reddit
                 subreddit: technology
                 show-thumbnails: true
               - type: reddit
                 subreddit: selfhosted
+                show-thumbnails: true
+              - type: reddit
+                subreddit: manybaggers
+                show-thumbnails: true
+              - type: reddit
+                subreddit: onebag
+                show-thumbnails: true
+              - type: reddit
+                subreddit: edc
                 show-thumbnails: true
 
       - size: small
