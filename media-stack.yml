@@ -94,8 +94,6 @@ services:
       - ./plex/transcode:/transcode
       - ./tv:/tv
       - ./movies:/movies
-      - ./music:/music
-      - ./books:/books
     networks:
       - media
     restart: unless-stopped 

@@ -4,26 +4,26 @@
     auto_https off
 }
 
-dashboard.local {
+:80 {
     reverse_proxy localhost:8080
 }
 
 # Plex Media Server
-plex.local {
+:32400 {
     reverse_proxy localhost:32400
 }
 
 # Sonarr
-sonarr.local {
+:8989 {
     reverse_proxy localhost:8989
 }
 
 # qBittorrent
-qbittorrent.local {
+:8081 {
     reverse_proxy localhost:8081
 }
 
 # Gluetun HTTP Proxy
-gluetun.local {
+:8888 {
     reverse_proxy localhost:8888
 }
