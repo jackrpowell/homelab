@@ -16,8 +16,6 @@ services:
       - ./plex/transcode:/transcode
       - ./tv:/tv
       - ./movies:/movies
-    networks:
-      - media
     restart: unless-stopped 
 
   tautulli:
@@ -32,8 +30,6 @@ services:
       - ./plex/config/Library/Application Support/Plex Media Server/Logs:/logs:ro
     ports:
       - 8181:8181
-    networks:
-      - media
     restart: unless-stopped
 
   overseerr:
@@ -49,6 +45,4 @@ services:
       - ./movies:/movies
     ports:
       - 5055:5055
-    networks:
-      - media
     restart: unless-stopped
