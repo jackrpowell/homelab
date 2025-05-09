@@ -1,68 +1,24 @@
 version: '3.8'
-
-networks:
-  vpn:
-    name: vpn
-  media:
-    name: media
-
 services:
-  gluetun:
-    image: qmcgaw/gluetun
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun:/dev/net/tun
-    volumes:
-      - ./gluetun:/gluetun
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
     environment:
-      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
-      - OPENVPN_USER=${OPENVPN_USER}
-      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
-      - SERVER_REGIONS=${SERVER_REGIONS}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
     ports:
-      # qBittorrent
-      - 8081:8081
-      - 6881:6881
-      - 6881:6881/udp
-      # Sonarr
-      - 8989:8989
-    networks:
-      - vpn
-    restart: unless-stopped
-
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - WEBUI_PORT=8081
-      - TORRENTING_PORT=6881
+      - 32400:32400
     volumes:
-      - ./qbittorrent/config:/config
-      - ./downloads:/downloads
-    depends_on:
-      - gluetun
-    network_mode: "service:gluetun"
-    restart: unless-stopped
-
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ./sonarr/config:/config
-      - ./downloads:/downloads
+      - ./plex/config:/config
+      - ./plex/transcode:/transcode
       - ./tv:/tv
-    depends_on:
-      - gluetun
-    network_mode: "service:gluetun"
-    restart: unless-stopped
+      - ./movies:/movies
+    networks:
+      - media
+    restart: unless-stopped 
 
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
@@ -80,20 +36,19 @@ services:
       - media
     restart: unless-stopped
 
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - VERSION=docker
-      - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
-      - ./plex/config:/config
-      - ./plex/transcode:/transcode
+      - ./overseerr/config:/config
       - ./tv:/tv
       - ./movies:/movies
+    ports:
+      - 5055:5055
     networks:
       - media
-    restart: unless-stopped 
+    restart: unless-stopped

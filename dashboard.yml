@@ -3,8 +3,6 @@ services:
     container_name: glance
     image: glanceapp/glance
     restart: unless-stopped
-    environment:
-      - LOCAL_IP=${LOCAL_IP}
     volumes:
       - ./config:/app/config
     ports:

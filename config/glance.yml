@@ -13,16 +13,16 @@ pages:
             title: Services
             sites:
               - title: Plex
-                url: http://${LOCAL_IP}:32400/web
+                url: http://localhost:32400/web
                 icon: si:plex
               - title: Sonarr
-                url: http://${LOCAL_IP}:8989
+                url: http://localhost:8989/
                 icon: si:sonarr
               - title: qBittorrent
-                url: http://${LOCAL_IP}:8081
+                url: http://localhost:8081/
                 icon: si:qbittorrent
               - title: Gluetun
-                url: http://${LOCAL_IP}:8888
+                url: http://localhost:8888/
                 icon: si:gluetun
 
           - type: bookmarks

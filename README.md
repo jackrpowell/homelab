@@ -4,9 +4,47 @@ A Docker Compose setup for a media server stack including Plex, Sonarr, qBittorr
 
 ## Prerequisites
 
+- Ubuntu Server LTS (latest version recommended)
 - Docker and Docker Compose installed
 - A Private Internet Access (PIA) VPN account
 - A Plex account
+
+## Deployment Environment
+
+This stack is optimized for Ubuntu Server LTS deployment, offering several advantages:
+- Improved networking performance and stability
+- Native Docker support
+- Simplified service management
+- Better resource utilization
+- Enhanced security features
+
+### Ubuntu Server Setup
+
+1. Install Ubuntu Server LTS
+2. Update system packages:
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+3. Install Docker and Docker Compose:
+```bash
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Install Docker Compose
+sudo apt install docker-compose-plugin
+```
+
+4. Add your user to the docker group:
+```bash
+sudo usermod -aG docker $USER
+```
+
+5. Reboot the system to apply changes:
+```bash
+sudo reboot
+```
 
 ## Getting Started
 
@@ -47,6 +85,18 @@ docker compose -f media-stack.yml up -d
 - **Glance**: Dashboard for monitoring all services (http://${LOCAL_IP}:8080)
 
 ## Configuration
+
+### Network Configuration
+- Services are configured to use the host network for optimal performance
+- All services are accessible via the server's IP address
+- Port forwarding is handled through the host system
+- VPN tunneling is managed through Gluetun
+
+### Service Management
+- Services can be managed using standard Docker Compose commands
+- Systemd service files are available for automatic startup
+- Logs are accessible through Docker's logging system
+- Resource monitoring is available through Glance dashboard
 
 ### VPN (Gluetun)
 - Currently configured to use PIA's Netherlands servers
@@ -97,6 +147,8 @@ Access the Glance dashboard at http://${LOCAL_IP}:8080 to:
 1. If services can't connect to the internet:
    - Check VPN status in Gluetun web interface
    - Verify PIA credentials in `.env`
+   - Ensure network interfaces are properly configured
+   - Check firewall settings: `sudo ufw status`
 
 2. If Plex can't be claimed:
    - Get a new claim token from plex.tv/claim
@@ -107,12 +159,16 @@ Access the Glance dashboard at http://${LOCAL_IP}:8080 to:
    - Check qBittorrent web interface
    - Verify VPN connection
    - Check download directory permissions
+   - Verify disk space: `df -h`
 
 4. If Glance dashboard isn't showing services:
    - Verify LOCAL_IP is correctly set in `.env`
-   - Check if services are running
+   - Check if services are running: `docker compose -f media-stack.yml ps`
    - Ensure correct IP address is configured
+   - Check system logs: `journalctl -u docker`
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+5. System Maintenance:
+   - Regular system updates: `sudo apt update && sudo apt upgrade`
+   - Docker system prune: `docker system prune -a`
+   - Check disk usage: `df -h`
+   - Monitor system resources: `htop`

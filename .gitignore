@@ -10,6 +10,7 @@ plex/
 downloads/
 tv/
 movies/
+overseerr/
 
 # Logs
 *.log
