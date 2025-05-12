@@ -8,6 +8,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - VERSION=docker
+      - NVIDIA_VISIBLE_DEVICES=all
       - PLEX_CLAIM=${PLEX_CLAIM}
     ports:
       - 32400:32400
@@ -17,6 +18,9 @@ services:
       - /mnt/wdc-hdd/Movies:/media2
     security_opt:
       - apparmor=unconfined
+    devices:
+      - /dev/dri:/dev/dri
+    runtime: nvidia
     restart: unless-stopped 
 
   tautulli:
