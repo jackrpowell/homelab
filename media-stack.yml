@@ -26,7 +26,6 @@ services:
       - TZ=${TZ}
     volumes:
       - ./tautulli/config:/config
-      - /opt/plex/config/Logs:/logs:ro
     ports:
       - 8181:8181
     restart: unless-stopped
