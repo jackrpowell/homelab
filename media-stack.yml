@@ -12,7 +12,7 @@ services:
     ports:
       - 32400:32400
     volumes:
-      - /opt/plex/config:/config
+      - ./plex/config:/config
       - /mnt/elements-portable:/media1
       - /mnt/wdc-hdd/Movies:/media2
     restart: unless-stopped 
