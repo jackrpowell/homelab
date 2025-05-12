@@ -25,7 +25,6 @@ services:
       # qBittorrent
       - 8081:8081
       - 6881:6881
-      - 6881:6881/udp
       # Sonarr
       - 8989:8989
     networks:

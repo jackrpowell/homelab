@@ -12,10 +12,9 @@ services:
     ports:
       - 32400:32400
     volumes:
-      - ./plex/config:/config
-      - ./plex/transcode:/transcode
-      - ./tv:/tv
-      - ./movies:/movies
+      - /opt/plex/config:/config
+      - /mnt/elements-portable:/media1
+      - /mnt/wdc-hdd/Movies:/media2
     restart: unless-stopped 
 
   tautulli:
@@ -27,7 +26,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./tautulli/config:/config
-      - ./plex/config/Library/Application Support/Plex Media Server/Logs:/logs:ro
+      - /opt/plex/config/Logs:/logs:ro
     ports:
       - 8181:8181
     restart: unless-stopped
@@ -41,8 +40,6 @@ services:
       - TZ=${TZ}
     volumes:
       - ./overseerr/config:/config
-      - ./tv:/tv
-      - ./movies:/movies
     ports:
       - 5055:5055
     restart: unless-stopped
