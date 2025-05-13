@@ -2,6 +2,7 @@ version: '3.8'
 services:
   plex:
     image: lscr.io/linuxserver/plex:latest
+    runtime: nvidia
     container_name: plex
     environment:
       - PUID=${PUID}
@@ -20,7 +21,6 @@ services:
       - apparmor=unconfined
     devices:
       - /dev/dri:/dev/dri
-    runtime: nvidia
     restart: unless-stopped 
 
   tautulli:
@@ -34,6 +34,8 @@ services:
       - ./tautulli/config:/config
     ports:
       - 8181:8181
+    security_opt:
+      - apparmor=unconfined
     restart: unless-stopped
 
   overseerr:
@@ -47,4 +49,6 @@ services:
       - ./overseerr/config:/config
     ports:
       - 5055:5055
+    security_opt:
+      - apparmor=unconfined
     restart: unless-stopped
