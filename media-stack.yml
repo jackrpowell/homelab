@@ -11,11 +11,7 @@ services:
       - VERSION=docker
       - NVIDIA_VISIBLE_DEVICES=all
       - PLEX_CLAIM=${PLEX_CLAIM}
-    ports:
-      - 32400:32400
-    networks:
-      media_net:
-        ipv4_address: 192.168.68.100
+    network_mode: host
     volumes:
       - ./plex/config:/config
       - /mnt/elements-portable:/media1
@@ -37,8 +33,6 @@ services:
       - ./tautulli/config:/config
     ports:
       - 8181:8181
-    networks:
-      - media_net
     security_opt:
       - apparmor=unconfined
     restart: unless-stopped
@@ -54,15 +48,6 @@ services:
       - ./overseerr/config:/config
     ports:
       - 5055:5055
-    networks:
-      - media_net
     security_opt:
       - apparmor=unconfined
     restart: unless-stopped
-
-networks:
-  media_net:
-    ipam:
-      config:
-        - subnet: 192.168.68.0/24
-
