@@ -45,9 +45,17 @@ services:
       - ./qbittorrent/config:/config
       - ./downloads:/downloads
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy
+        restart: true
     network_mode: "service:gluetun"
     restart: unless-stopped
+    healthcheck:
+        test: ping -c 1 www.google.com || exit 1
+        interval: 60s
+        retries: 3
+        start_period: 20s
+        timeout: 10s
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -61,6 +69,8 @@ services:
       - ./downloads:/downloads
       - ./tv:/tv
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy
+        restart: true
     network_mode: "service:gluetun"
     restart: unless-stopped 
