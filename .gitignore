@@ -12,6 +12,7 @@ tv/
 movies/
 overseerr/
 prowlarr/
+radarr/
 
 # Logs
 *.log
