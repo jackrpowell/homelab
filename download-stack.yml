@@ -27,6 +27,8 @@ services:
       - 6881:6881
       # Sonarr
       - 8989:8989
+      # Prowlarr
+      - 9696:9696
     networks:
       vpn:
         ipv4_address: 172.19.0.2
@@ -43,7 +45,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - ./qbittorrent/config:/config
-      - ./downloads:/downloads
+      - /mnt/elements-portable:/data
     depends_on:
       gluetun:
         condition: service_healthy
@@ -66,11 +68,26 @@ services:
       - TZ=${TZ}
     volumes:
       - ./sonarr/config:/config
-      - ./downloads:/downloads
-      - ./tv:/tv
+      - /mnt/elements-portable:/data
     depends_on:
       gluetun:
         condition: service_healthy
         restart: true
     network_mode: "service:gluetun"
-    restart: unless-stopped 
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./prowlarr:/config
+    depends_on:
+      gluetun:
+        condition: service_healthy
+        restart: true
+    network_mode: "service:gluetun"
+    restart: unless-stopped

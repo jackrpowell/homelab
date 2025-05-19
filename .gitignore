@@ -11,6 +11,7 @@ downloads/
 tv/
 movies/
 overseerr/
+prowlarr/
 
 # Logs
 *.log
