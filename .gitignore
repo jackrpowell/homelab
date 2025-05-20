@@ -13,6 +13,7 @@ movies/
 overseerr/
 prowlarr/
 radarr/
+nginx-proxy-mgr/
 
 # Logs
 *.log

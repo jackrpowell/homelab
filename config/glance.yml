@@ -16,14 +16,17 @@ pages:
                 url: http://192.168.1.180:32400/web
                 icon: si:plex
               - title: Sonarr
-                url: http://192.168.1.180:8989/
+                url: https://sonarr.jackrp.com/
                 icon: si:sonarr
+              - title: Radarr
+                url: https://radarr.jackrp.com/
+                icon: si:radarr
               - title: qBittorrent
-                url: http://localhost:8081/
+                url: https://torrent.jackrp.com/
                 icon: si:qbittorrent
-              - title: Gluetun
-                url: http://localhost:8888/
-                icon: si:gluetun
+              - title: Overseerr
+                url: http://overseerr.jackrp.com/
+                icon: si:overseerr
 
           - type: bookmarks
             groups:
@@ -78,11 +81,10 @@ pages:
           - type: twitch-channels
             channels:
               - theprimeagen
-              - j_blow
-              - piratesoftware
+              - teej_dv
               - cohhcarnage
-              - christitustech
-              - EJ_SA
+              - pestily
+              - gamesdonequick
 
       - size: full
         widgets:
@@ -97,6 +99,9 @@ pages:
               - UCu8YylsPiu9XfaQC74Hr_Gw # Berm Peak
               - UCSnqXeK94-iNmwqGO__eJ5g # Steve Wallis
               - UCm325cMiw9B15xl22_gr6Dw # Beau Miles
+              - UC8ENHE5xdFSwx71u3fDH5Xw # theprimeagen
+              - UCUyeluBRhGPCW4rPe_UvBZQ # ThePrimeTime (theprimeagen)
+              - UCQEDB9BVgbMKF8gaOW75WGQ # Probably Riding
 
 
           - type: group
