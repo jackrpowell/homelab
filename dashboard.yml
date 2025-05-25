@@ -4,6 +4,6 @@ services:
     image: glanceapp/glance
     restart: unless-stopped
     volumes:
-      - ./config:/app/config
+      - ./glance:/app/config
     ports:
       - 8080:8080

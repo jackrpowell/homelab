@@ -13,7 +13,7 @@ pages:
             title: Services
             sites:
               - title: Plex
-                url: http://192.168.1.180:32400/web
+                url: https://plex.jackrp.com/web
                 icon: si:plex
               - title: Sonarr
                 url: https://sonarr.jackrp.com/
@@ -25,8 +25,11 @@ pages:
                 url: https://torrent.jackrp.com/
                 icon: si:qbittorrent
               - title: Overseerr
-                url: http://overseerr.jackrp.com/
+                url: https://overseerr.jackrp.com/
                 icon: si:overseerr
+              - title: Tautulli
+                url: https://tautulli.jackrp.com/
+                icon: si:tautulli
 
           - type: bookmarks
             groups:
