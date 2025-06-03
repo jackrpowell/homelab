@@ -26,3 +26,38 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer:/data
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./nextcloud:/config
+      - /mnt/seagate-portable/nextcloud:/data
+    ports:
+      - '5443:443'
+    restart: unless-stopped
+  fail2ban:
+    image: lscr.io/linuxserver/fail2ban:latest
+    container_name: fail2ban
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERBOSITY=-vv #optional
+    volumes:
+      - ./fail2ban:/config
+      - /var/log:/var/log:ro
+      - ./nextcloud/log:/remotelogs/nextcloud:ro #optional
+      - ./nginx-proxy-mgr/log:/remotelogs/nginx:ro #optional
+      - ./overseerr/log:/remotelogs/overseerr:ro #optional
+      - ./prowlarr/log:/remotelogs/prowlarr:ro #optional
+      - ./radarr/log:/remotelogs/radarr:ro #optional
+      - ./sonarr/log:/remotelogs/sonarr:ro #optional
+    restart: unless-stopped

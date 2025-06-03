@@ -17,6 +17,9 @@ nginx-proxy-mgr/
 portainer/
 ghost/
 glance/
+mysql-blog/
+nextcloud/
+fail2ban/
 
 # Logs
 *.log

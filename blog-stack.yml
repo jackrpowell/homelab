@@ -1,15 +1,18 @@
 services:
   ghost:
     image: ghost:5-alpine
-    restart: always
+    container_name: blog
+    restart: unless-stopped 
+    depends_on:
+      - db
     ports:
       - 2368:2368
     environment:
       # see https://ghost.org/docs/config/#configuration-options
       database__client: mysql
       database__connection__host: db
-      database__connection__user: root
-      database__connection__password: example
+      database__connection__user: ${DB_USER} 
+      database__connection__password: ${DB_PASSWORD}
       database__connection__database: ghost
       # this url value is just an example, and is likely wrong for your environment!
       url: http://blog.jackrp.com
@@ -20,12 +23,12 @@ services:
 
   db:
     image: mysql:8.0
-    restart: always
+    container_name: mysql-blog
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: ghost
+      MYSQL_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} 
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - db:/var/lib/mysql
-
-volumes:
-  ghost:
-  db:
+      - ./mysql-blog:/var/lib/mysql
