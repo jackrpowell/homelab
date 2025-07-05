@@ -61,3 +61,17 @@ services:
       - ./radarr/log:/remotelogs/radarr:ro #optional
       - ./sonarr/log:/remotelogs/sonarr:ro #optional
     restart: unless-stopped
+  adguard:
+    image: adguard/adguardhome
+    container_name: adguard
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '4167:67/udp'
+      - '4168:68/udp'
+      - '4180:80/tcp'
+      - '4130:3000'
+    volumes:
+      - ./adguard/config:/opt/adguardhome/conf
+      - ./adguard/work:/opt/adguardhome/work
+    restart: unless-stopped
