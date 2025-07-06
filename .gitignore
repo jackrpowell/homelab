@@ -20,6 +20,12 @@ glance/
 mysql-blog/
 nextcloud/
 fail2ban/
+image-hosting/database/
+image-hosting/storage/
+adguard/
+gitlab/logs
+gitlab/data
+gitlab/config
 
 # Logs
 *.log
