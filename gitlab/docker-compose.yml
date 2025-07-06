@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   gitlab:
@@ -6,9 +6,9 @@ services:
     container_name: gitlab
     hostname: 'localhost'
     ports:
-      - "822:22"
-      - "880:80"
-      - "843:443"
+      - '822:22'
+      - '880:80'
+      - '843:443'
     volumes:
       - ./data:/var/opt/gitlab
       - ./logs:/var/log/gitlab
