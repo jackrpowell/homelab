@@ -3,8 +3,10 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
     restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
     ports:
-      # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
@@ -74,4 +76,12 @@ services:
     volumes:
       - ./adguard/config:/opt/adguardhome/conf
       - ./adguard/work:/opt/adguardhome/work
+    restart: unless-stopped
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - '1180:8080'
     restart: unless-stopped
